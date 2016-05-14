@@ -1,0 +1,32 @@
+{
+  "name": "json-joust",
+  "version": "1.0.0",
+  "description": "Library for wrangling large JSON objects",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jknielse/json-joust.git"
+  },
+  "keywords": [
+    "json",
+    "large",
+    "scraping"
+  ],
+  "author": "Jake Nielsen <jake.k.nielsen@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jknielse/json-joust/issues"
+  },
+  "homepage": "https://github.com/jknielse/json-joust",
+  "devDependencies": {
+    "mocha": "^2.3.4"
+  },
+  "dependencies": {
+  }
+}
