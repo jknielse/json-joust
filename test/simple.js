@@ -201,6 +201,34 @@ describe('Simple Tests', function() {
     done();
   })
 
+  it('regex key test', function (done) {
+    var plan = {
+      'test': {
+        '/thing.*/': 'val'
+      }
+    }
+    var input = {
+      'test': [
+        {
+          'thingggg': 1
+        },
+        {
+          'thingy': 2
+        }
+      ]
+    }
+    var expect = [
+      {
+        'val': 1,
+      },
+      {
+        'val': 2,
+      }
+    ]
+    assert.deepEqual(jjoust.joust(plan, input), expect);
+    done();
+  })
+
   it('larger test', function (done) {
     var plan = {
       'hereis': {

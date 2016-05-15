@@ -112,7 +112,7 @@ var joust = function (plan, input) {
   }
   var inputKey = Object.keys(input)[0];
   var planKey = Object.keys(plan)[0];
-  if (matches(inputKey, planKey)) return joust(plan[planKey], input[inputKey]);
+  if (matches(planKey, inputKey)) return joust(plan[planKey], input[inputKey]);
   return [nullLeafObject(plan)];
 }
 
