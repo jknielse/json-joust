@@ -108,6 +108,7 @@ exports.findPath = function (match, input) {
   if (!isAnyObject(input)) {
     // If the input is falsey, then we'll just cheat.
     if (matches(match, input)) return input || true;
+    return false;
   }
   if (isArray(input)) {
     var potentialPath = false;

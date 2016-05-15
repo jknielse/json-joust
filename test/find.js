@@ -98,4 +98,15 @@ describe('Testing findPath', function() {
     assert.deepEqual(jjoust.findPath(/(?:a|b)/, input), expect);
     done();
   });
+
+  it('no matches', function (done) {
+    var input = {
+      'test': {
+        'deeper': 'a'
+      }
+    }
+    var expect = false;
+    assert.deepEqual(jjoust.findPath(/This is not a thing/, input), expect);
+    done();
+  });
 })
