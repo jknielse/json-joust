@@ -1,7 +1,3 @@
-
-
-
-
 var isRegex = function (r) {
   return r instanceof RegExp;
 }
@@ -16,6 +12,14 @@ var isString = function(s) {
 
 var isAnyObject = function(o) {
   return o != null && (typeof o === 'object' || typeof o === 'function');
+}
+
+var hasAny = function (o) {
+  var any = false;
+  Object.keys(o).forEach(function (key) {
+    if (o[key] !== null) any = true;
+  });
+  return any;
 }
 
 var matches = function (test, item) {
@@ -40,12 +44,29 @@ var zip = function (objects) {
 }
 
 var zipLists = function (lists) {
+  var maxListLength = 0;
+
+  lists.forEach(function (list) {
+    if (list.length > maxListLength) maxListLength = list.length;
+  });
+
+  var realLists = [];
+
+  lists.forEach(function (list) {
+    if (list.length < maxListLength) {
+      list.forEach(function (member) {
+        if (hasAny(member)) throw new Error('Tried to zip incompatible lists');
+      });
+    } else {
+      realLists.push(list);
+    }
+  })
+
   var results = [];
-  while (lists[0].length > 0) {
+  while (realLists[0].length > 0) {
     var sublist = [];
-    lists.forEach(function (list) {
-      if (list.length === 0) throw new Error('Tried to zip lists that were not the same length!');
-      sublist.push(list.pop());
+    realLists.forEach(function (list) {
+      sublist.push(list.shift());
     })
     results.push(zip(sublist));
   }
@@ -93,14 +114,6 @@ var joust = function (plan, input) {
   var planKey = Object.keys(plan)[0];
   if (matches(inputKey, planKey)) return joust(plan[planKey], input[inputKey]);
   return [nullLeafObject(plan)];
-}
-
-var hasAny = function (o) {
-  var any = false;
-  Object.keys(o).forEach(function (key) {
-    if (o[key] !== null) any = true;
-  });
-  return any;
 }
 
 exports.joust = function (plan, input) {

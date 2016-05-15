@@ -171,4 +171,150 @@ describe('Simple Tests', function() {
     assert.deepEqual(jjoust.joust(plan, input), expect);
     done();
   });
+
+  it('arrays with sisters', function (done) {
+    var plan = {
+      'test': {
+        'thing': 'val'
+      }
+    }
+    var input = {
+      'sister': 3,
+      'test': [
+        {
+          'thing': 1
+        },
+        {
+          'thing': 2
+        }
+      ]
+    }
+    var expect = [
+      {
+        'val': 1,
+      },
+      {
+        'val': 2,
+      }
+    ]
+    assert.deepEqual(jjoust.joust(plan, input), expect);
+    done();
+  })
+
+  it('larger test', function (done) {
+    var plan = {
+      'hereis': {
+        'some': {
+          'very': {
+            'deep': {
+              'plan': {
+                'here': 'val'
+              }
+            }
+          }
+        }
+      }
+    }
+    var input = { hereis: [ 
+      {
+        'some': {
+          'testt': 3,
+          'very': [
+            {
+              'deep': {
+                'plan': [{
+                  'here': 1
+                }]
+              }
+            },
+            {
+              'deep': {
+                'plan': {
+                  'here': 2
+                }
+              }
+            },
+            {
+              'deep': {
+                'plan': [{
+                  'here': 3
+                }, {
+                  'here': 4
+                }]
+              }
+            },
+            {
+              'deep': {
+                'plan': {
+                  'here': 4
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        'some': {
+          'very': {
+            'deep': {
+              'plan': [
+                {
+                  'here': 5
+                },
+                {
+                  'here': 6
+                },
+                {
+                  'here': 7
+                },
+                {
+                  'here': 8
+                },
+                {
+                  'here': 9
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+
+      }
+    ]}
+    var expect = [
+      {
+        'val': 1
+      },
+      {
+        'val': 2
+      },
+      {
+        'val': 3
+      },
+      {
+        'val': 4
+      },
+      {
+        'val': 4
+      },
+      {
+        'val': 5
+      },
+      {
+        'val': 6
+      },
+      {
+        'val': 7
+      },
+      {
+        'val': 8
+      },
+      {
+        'val': 9
+      }
+    ]
+    assert.deepEqual(jjoust.joust(plan, input), expect);
+    done();
+  });
 })
