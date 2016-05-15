@@ -103,3 +103,27 @@ var hasAny = function (o) {
 exports.joust = function (plan, input) {
   return joust(plan, input).filter(hasAny);
 }
+
+exports.findPath = function (match, input) {
+  if (!isAnyObject(input)) {
+    // If the input is falsey, then we'll just cheat.
+    if (matches(match, input)) return input || true;
+  }
+  if (isArray(input)) {
+    var potentialPath = false;
+    input.forEach(function (member) {
+      potentialPath = potentialPath || exports.findPath(match, member);
+    });
+    return potentialPath;
+  }
+  var potentialPath = false;
+  Object.keys(input).forEach(function (key) {
+    if (!potentialPath) {
+      var p = exports.findPath(match, input[key])
+      if (p) {
+        potentialPath = {[key]: exports.findPath(match, input[key])};
+      }
+    }
+  });
+  return potentialPath;
+}
