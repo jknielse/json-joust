@@ -121,7 +121,6 @@ describe('Simple Tests', function() {
     done();
   });
 
-
   it('multiple key with array of objects with missing part', function (done) {
     var plan = {
       'test': 'keyname',
@@ -144,6 +143,29 @@ describe('Simple Tests', function() {
       {
         'keyname': 3,
         'second_keyname': null
+      }
+    ]
+    assert.deepEqual(jjoust.joust(plan, input), expect);
+    done();
+  });
+
+  it('nulled out objects should be deleted', function (done) {
+    var plan = {
+      'test': 'keyname',
+      'other_test': 'second_keyname',
+    }
+    var input = [
+      {
+        'test': 1,
+        'other_test': 2,
+      },
+      {
+      }
+    ]
+    var expect = [
+      {
+        'keyname': 1,
+        'second_keyname': 2
       }
     ]
     assert.deepEqual(jjoust.joust(plan, input), expect);

@@ -59,14 +59,14 @@ var nullLeafObject = function (plan) {
   return zip(results);
 }
 
-exports.joust = function (plan, input) {
+var joust = function (plan, input) {
   if (!isAnyObject(plan)) return [{[plan]: input}];
   if (!isAnyObject(input)) return [nullLeafObject(plan)];
   if (isArray(plan)) throw new Error('Plans cannot contain arrays, silly.');
   if (isArray(input)) {
     var results = [];
     input.forEach(function (i) {
-      results = results.concat(exports.joust(plan, i));
+      results = results.concat(joust(plan, i));
     })
     return results;
   }
@@ -75,19 +75,31 @@ exports.joust = function (plan, input) {
   if (Object.keys(plan).length > 1) {
     var results = [];
     Object.keys(plan).forEach(function (key) {
-      results.push(exports.joust({[key]: plan[key]}, input));
+      results.push(joust({[key]: plan[key]}, input));
     });
     return zipLists(results);
   }
   if (Object.keys(input).length > 1) {
     var results = [];
     Object.keys(input).forEach(function (key) {
-      results.push(exports.joust(plan, {[key]: input[key]}));
+      results.push(joust(plan, {[key]: input[key]}));
     });
     return zipLists(results);
   }
   var inputKey = Object.keys(input)[0];
   var planKey = Object.keys(plan)[0];
-  if (matches(inputKey, planKey)) return exports.joust(plan[planKey], input[inputKey]);
+  if (matches(inputKey, planKey)) return joust(plan[planKey], input[inputKey]);
   return [nullLeafObject(plan)];
+}
+
+var hasAny = function (o) {
+  var any = false;
+  Object.keys(o).forEach(function (key) {
+    if (o[key] !== null) any = true;
+  });
+  return any;
+}
+
+exports.joust = function (plan, input) {
+  return joust(plan, input).filter(hasAny);
 }
