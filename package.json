@@ -1,6 +1,6 @@
 {
   "name": "json-joust",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Library for wrangling large JSON objects",
   "main": "index.js",
   "directories": {
