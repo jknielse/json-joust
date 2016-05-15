@@ -19,6 +19,9 @@ var isAnyObject = function(o) {
 }
 
 var matches = function (test, item) {
+  if (isString(test) && test.startsWith('/') && test.endsWith('/')) {
+    test = new RegExp(test.substring(1, test.length - 2));
+  }
   if (isRegex(test)) {
     return !!item.match(test);
   } else {
